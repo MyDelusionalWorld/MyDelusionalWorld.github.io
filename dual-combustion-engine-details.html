@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details - Dual Combustion Engine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #d1d5db;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+    <!-- This is the Password Prompt Section -->
+    <div id="password-prompt" class="w-full max-w-md p-8 space-y-4 bg-gray-800 rounded-lg shadow-lg text-center">
+        <h1 class="text-2xl font-bold text-white">Access Protected</h1>
+        <p class="text-gray-400">Please enter the password to view the project details.</p>
+        <input type="password" id="password-input" class="w-full px-4 py-2 text-white bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="Password">
+        <button id="submit-btn" class="w-full px-4 py-2 font-semibold text-white bg-sky-500 rounded-md hover:bg-sky-600 transition">View Project</button>
+        <p id="error-message" class="text-red-400 h-4"></p>
+    </div>
+
+    <!-- This is the Hidden Project Content Section -->
+    <div id="project-content" style="display: none;" class="container mx-auto p-8">
+        <h1 class="text-4xl font-bold text-white mb-4">Dual Combustion Engine - Project Details</h1>
+        
+        <!-- === ADD ALL YOUR PROJECT INFO HERE === -->
+        
+        <p class="mb-4">
+            This is where you can write a very detailed description of your project. Talk about the goals, the challenges, and the solutions you came up with.
+        </p>
+
+        <img src="https://placehold.co/800x400/1f2937/d1d5db?text=Engine+Diagram" alt="Engine Diagram" class="w-full rounded-lg shadow-lg mb-4">
+
+        <h2 class="text-2xl font-bold text-white mt-8 mb-2">Technical Specifications</h2>
+        <ul class="list-disc list-inside mb-4">
+            <li>Specification 1: Detail about spec 1.</li>
+            <li>Specification 2: Detail about spec 2.</li>
+            <li>Specification 3: Detail about spec 3.</li>
+        </ul>
+        
+        <a href="https://mydelusionalworld.github.io" class="text-sky-400 hover:text-sky-300">&larr; Back to Portfolio</a>
+    </div>
+
+    <script>
+        // This function takes a string and returns its SHA-256 hash as a hex string.
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+
+        async function checkPassword() {
+            // === HOW TO SET YOUR PASSWORD ===
+            // 1. Choose a strong password (e.g., "MySecretProject123!").
+            // 2. Go to a free online SHA-256 generator like: sha256-online.com
+            // 3. Enter your password and copy the long "hash" string it generates.
+            // 4. Paste that hash string below, replacing the existing one.
+            const correctPasswordHash = 'e38fe1ab19e17a8ca141b0b1ae50740d618f482260dc3f781652b05b2e6031e9'; // This is the hash for "YourSecretPassword"
+
+            const passwordInput = document.getElementById('password-input');
+            const errorMessage = document.getElementById('error-message');
+            const userInput = passwordInput.value;
+
+            // Hash the user's input to compare it with the stored hash.
+            const userInputHash = await sha256(userInput);
+
+            if (userInputHash === correctPasswordHash) {
+                // If hashes match, show the project
+                document.getElementById('password-prompt').style.display = 'none';
+                document.getElementById('project-content').style.display = 'block';
+            } else {
+                // If hashes don't match, show an error message
+                errorMessage.textContent = 'Incorrect password. Please try again.';
+                passwordInput.value = ''; // Clear the input for security
+            }
+        }
+
+        // Add event listeners for the button and the Enter key
+        document.getElementById('submit-btn').addEventListener('click', checkPassword);
+        document.getElementById('password-input').addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+</html>
