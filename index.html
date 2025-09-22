@@ -167,14 +167,13 @@
                 I'm always open to discussing new projects, creative ideas, or opportunities to be part of an innovative team. Feel free to reach out.
             </p>
             <div class="relative inline-block">
-                <button id="copy-email-btn" class="bg-gray-700 text-white font-semibold px-8 py-4 rounded-lg hover:bg-gray-600 transition duration-300 flex items-center gap-3">
-                    <i data-lucide="mail" class="w-6 h-6"></i>
-                    <span id="email-text">oscorptechhub@gmail.com</span>
-                </button>
-                <div id="copy-success-msg" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-green-500 text-white text-sm px-3 py-1 rounded-md opacity-0 transition-opacity duration-300">
-                    Copied!
-                </div>
-            </div>
+                <a href="mailto:oscorptechhub@gmail.com" id="email-link" class="bg-gray-700 text-white font-semibold px-8 py-4 rounded-lg hover:bg-gray-600 transition duration-300 flex items-center gap-3">
+    <i data-lucide="mail" class="w-6 h-6"></i>
+    <span id="email-text">oscorptechhub@gmail.com</span>
+</a>
+<div id="copy-success-msg" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-green-500 text-white text-sm px-3 py-1 rounded-md opacity-0 transition-opacity duration-300">
+    Email client opened!
+</div>
         </section>
     </main>
 
@@ -235,24 +234,19 @@
             observer.observe(section);
         });
 
-        // Copy Email to Clipboard
-        const copyEmailBtn = document.getElementById('copy-email-btn');
-        const emailText = document.getElementById('email-text').textContent;
-        const copySuccessMsg = document.getElementById('copy-success-msg');
+        // Email Link Notification
+const emailLink = document.getElementById('email-link');
+const copySuccessMsg = document.getElementById('copy-success-msg');
 
-        copyEmailBtn.addEventListener('click', () => {
-            const textarea = document.createElement('textarea');
-            textarea.value = emailText;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
+// Also, let's change the message text to be more accurate
+copySuccessMsg.textContent = 'Email client opened!';
 
-            copySuccessMsg.classList.remove('opacity-0');
-            setTimeout(() => {
-                copySuccessMsg.classList.add('opacity-0');
-            }, 2000);
-        });
+emailLink.addEventListener('click', () => {
+    copySuccessMsg.classList.remove('opacity-0');
+    setTimeout(() => {
+        copySuccessMsg.classList.add('opacity-0');
+    }, 2500);
+});
 
         // Back to top button
         const backToTopButton = document.getElementById('back-to-top');
